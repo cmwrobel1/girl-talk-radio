@@ -5,22 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.mediaPage.MediaPageFragment">
 
     <ImageView
-        android:id="@+id/girl_talk_image"
+        android:id="@+id/tempImage1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="4dp"
         android:adjustViewBounds="true"
-        android:scaleX=".75"
-        android:scaleY=".75"
-        android:src="@drawable/girl_talk_radio_image_temp"
+        android:scaleX=".9"
+        android:scaleY=".9"
+        android:src="@drawable/nature1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_home"
+        android:id="@+id/text_mediaPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -33,6 +33,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.701" />
+        app:layout_constraintVertical_bias="0.543" />
+
+    <ImageView
+        android:id="@+id/tempImage2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="464dp"
+        android:adjustViewBounds="true"
+        android:scaleX=".9"
+        android:scaleY=".9"
+        android:src="@drawable/nature2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
