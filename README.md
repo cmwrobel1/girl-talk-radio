@@ -1,3 +1,3 @@
 # girl-talk-radio
 
-# Discription
+# Description
