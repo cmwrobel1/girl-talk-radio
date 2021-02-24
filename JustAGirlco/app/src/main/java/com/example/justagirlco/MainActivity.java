@@ -1,10 +1,15 @@
 package com.example.justagirlco;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.Gallery;
 
+import com.example.justagirlco.ui.gallery.GalleryFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -13,9 +18,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements GalleryFragment.onFragmentBtnSelected {
+    //passes the button - might need more efficient way to do this
     private AppBarConfiguration mAppBarConfiguration;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +54,13 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    //button code that when this function is executed from the click event then it will handle the
+    //new activity startup
+    @Override
+    public void onButtonSelected() {
+        Intent in = new Intent(MainActivity.this, RssActivity.class);
+        MainActivity.this.startActivity(in);
     }
 }
