@@ -1,14 +1,14 @@
-package com.example.justagirlco.ui.gallery;
+package com.example.justagirlco.ui.podcasts;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class PodcastsViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public PodcastsViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("Authors Podcast Page");
     }

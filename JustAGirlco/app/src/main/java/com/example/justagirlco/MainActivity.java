@@ -3,13 +3,10 @@ package com.example.justagirlco;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.Gallery;
 
-import com.example.justagirlco.ui.gallery.GalleryFragment;
+import com.example.justagirlco.ui.podcasts.PodcastsFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,7 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity implements GalleryFragment.onFragmentBtnSelected {
+public class MainActivity extends AppCompatActivity implements PodcastsFragment.onFragmentBtnSelected {
     //passes the button - might need more efficient way to do this
     private AppBarConfiguration mAppBarConfiguration;
 

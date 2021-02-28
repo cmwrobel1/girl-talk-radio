@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_podcasts"
-        android:name="com.example.justagirlco.ui.gallery.GalleryFragment"
+        android:name="com.example.justagirlco.ui.podcasts.PodcastsFragment"
         android:label="@string/menu_podcast_page"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_podcasts" />
 
     <fragment
         android:id="@+id/nav_top_10"

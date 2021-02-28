@@ -1,4 +1,4 @@
-package com.example.justagirlco.ui.gallery;
+package com.example.justagirlco.ui.podcasts;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,17 +16,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.justagirlco.R;
 
-public class GalleryFragment extends Fragment {
+public class PodcastsFragment extends Fragment {
 
     private onFragmentBtnSelected listener;
 
-    private GalleryViewModel galleryViewModel;
+    private PodcastsViewModel podcastsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
+        podcastsViewModel =
+                new ViewModelProvider(this).get(PodcastsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_podcasts, container, false);
 
         //button create
         Button clickme = root.findViewById(R.id.button2);
@@ -37,8 +37,8 @@ public class GalleryFragment extends Fragment {
             }
         });
 
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = root.findViewById(R.id.text_podcasts);
+        podcastsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
