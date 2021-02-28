@@ -1,4 +1,4 @@
-package com.example.justagirlco.ui.multimedia;
+package com.girltalkradio.ui.multimedia;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

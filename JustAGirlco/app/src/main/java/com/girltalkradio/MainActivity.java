@@ -1,10 +1,10 @@
-package com.example.justagirlco;
+package com.girltalkradio;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
-import com.example.justagirlco.ui.podcasts.PodcastsFragment;
+import com.girltalkradio.ui.podcasts.PodcastsFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;

@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/nav_podcasts"
-        android:name="com.example.justagirlco.ui.podcasts.PodcastsFragment"
+        android:name="com.girltalkradio.ui.podcasts.PodcastsFragment"
         android:label="@string/menu_podcast_page"
         tools:layout="@layout/fragment_podcasts" />
 
     <fragment
         android:id="@+id/nav_top_10"
-        android:name="com.example.justagirlco.ui.top10.Top10Fragment"
+        android:name="com.girltalkradio.ui.top10.Top10Fragment"
         android:label="@string/menu_top_10"
         tools:layout="@layout/fragment_top_10" />
 
     <fragment
         android:id="@+id/nav_multimedia"
-        android:name="com.example.justagirlco.ui.multimedia.MultimediaFragment"
+        android:name="com.girltalkradio.ui.multimedia.MultimediaFragment"
         android:label="@string/menu_multimedia"
         tools:layout="@layout/fragment_multimedia" />
 

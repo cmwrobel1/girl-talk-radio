@@ -1,4 +1,4 @@
-package com.example.justagirlco.ui.podcasts;
+package com.girltalkradio.ui.podcasts;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.justagirlco.R;
+import com.girltalkradio.R;
 
 public class PodcastsFragment extends Fragment {
 

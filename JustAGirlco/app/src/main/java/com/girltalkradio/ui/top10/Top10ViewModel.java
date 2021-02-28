@@ -1,16 +1,16 @@
-package com.example.justagirlco.ui.podcasts;
+package com.girltalkradio.ui.top10;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class PodcastsViewModel extends ViewModel {
+public class Top10ViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public PodcastsViewModel() {
+    public Top10ViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Authors Podcast Page");
+        mText.setValue("Top Rated Should go Here");
     }
 
     public LiveData<String> getText() {
