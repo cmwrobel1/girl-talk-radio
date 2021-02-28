@@ -9,7 +9,7 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_podcasts" />
         <item
-            android:id="@+id/nav_girl_talk"
+            android:id="@+id/nav_top_10"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_top_10" />
         <item

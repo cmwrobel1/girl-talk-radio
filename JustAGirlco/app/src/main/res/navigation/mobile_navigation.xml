@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_girl_talk"
-        android:name="com.example.justagirlco.ui.slideshow.SlideshowFragment"
+        android:id="@+id/nav_top_10"
+        android:name="com.example.justagirlco.ui.top10.Top10Fragment"
         android:label="@string/menu_top_10"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_top_10" />
 
     <fragment
         android:id="@+id/nav_multimedia"

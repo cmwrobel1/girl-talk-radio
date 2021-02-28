@@ -1,4 +1,4 @@
-package com.example.justagirlco.ui.slideshow;
+package com.example.justagirlco.ui.top10;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.justagirlco.R;
 
-public class SlideshowFragment extends Fragment {
+public class Top10Fragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private Top10ViewModel top10ViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        top10ViewModel =
+                new ViewModelProvider(this).get(Top10ViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_top_10, container, false);
+        final TextView textView = root.findViewById(R.id.text_top_10);
+        top10ViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
