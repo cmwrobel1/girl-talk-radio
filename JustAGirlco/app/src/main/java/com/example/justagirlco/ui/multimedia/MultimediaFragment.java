@@ -1,4 +1,4 @@
-package com.example.justagirlco.ui.mediaPage;
+package com.example.justagirlco.ui.multimedia;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.justagirlco.R;
 
-public class MediaPageFragment extends Fragment {
+public class MultimediaFragment extends Fragment {
 
-    private MediaPageViewModel mediaPageViewModel;
+    private MultimediaViewModel multimediaViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        mediaPageViewModel =
-                new ViewModelProvider(this).get(MediaPageViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_media_page, container, false);
-        final TextView textView = root.findViewById(R.id.text_mediaPage);
-        mediaPageViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        multimediaViewModel =
+                new ViewModelProvider(this).get(MultimediaViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_multimedia, container, false);
+        final TextView textView = root.findViewById(R.id.text_multimedia);
+        multimediaViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

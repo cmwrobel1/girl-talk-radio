@@ -18,9 +18,9 @@
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
-        android:id="@+id/nav_mediaPage"
-        android:name="com.example.justagirlco.ui.mediaPage.MediaPageFragment"
-        android:label="@string/menu_media"
-        tools:layout="@layout/fragment_media_page" />
+        android:id="@+id/nav_multimedia"
+        android:name="com.example.justagirlco.ui.multimedia.MultimediaFragment"
+        android:label="@string/menu_multimedia"
+        tools:layout="@layout/fragment_multimedia" />
 
 </navigation>
