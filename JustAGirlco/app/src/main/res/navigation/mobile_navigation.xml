@@ -15,7 +15,11 @@
         android:id="@+id/nav_girl_talk"
         android:name="com.example.justagirlco.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_nav_girl_talk_to_nav_podcasts"
+            app:destination="@id/nav_podcasts" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_mediaPage"
