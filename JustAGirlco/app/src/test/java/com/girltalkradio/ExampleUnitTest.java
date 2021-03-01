@@ -1,4 +1,4 @@
-package com.example.justagirlco;
+package com.girltalkradio;
 
 import org.junit.Test;
 

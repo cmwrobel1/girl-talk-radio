@@ -1,15 +1,12 @@
-package com.example.justagirlco;
+package com.girltalkradio;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.Gallery;
 
-import com.example.justagirlco.ui.gallery.GalleryFragment;
+import com.girltalkradio.ui.podcasts.PodcastsFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,7 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity implements GalleryFragment.onFragmentBtnSelected {
+public class MainActivity extends AppCompatActivity implements PodcastsFragment.onFragmentBtnSelected {
     //passes the button - might need more efficient way to do this
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -34,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements GalleryFragment.o
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_podcasts, R.id.nav_girl_talk, R.id.nav_mediaPage)
+                R.id.nav_podcasts, R.id.nav_top_10, R.id.nav_multimedia)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
