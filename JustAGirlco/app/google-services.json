@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "620011744050",
+    "project_id": "justagirlco-b4de1",
+    "storage_bucket": "justagirlco-b4de1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620011744050:android:72148381f373a88db0452b",
+        "android_client_info": {
+          "package_name": "com.girltalkradio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "620011744050-t68qbasdee3jf4c58vvkop732107ouv6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRa6krwVQxGn1v601hw3lE9U3XpFi6sgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "620011744050-t68qbasdee3jf4c58vvkop732107ouv6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
