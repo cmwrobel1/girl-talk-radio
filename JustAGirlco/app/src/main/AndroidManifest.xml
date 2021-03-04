@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JustAGirlCo">
         <activity android:name=".RssActivity"></activity>
+        <activity android:name=".ListeningScreenActivity"></activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -27,8 +28,13 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <service android:name=".MediaPlayerService" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+
 
 </manifest>

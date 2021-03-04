@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -71,8 +72,14 @@ public class RssActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Uri uri = Uri.parse(links.get(position));       //this will open an http link to an mp3 file lol
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri); //change this so that it will move to the PodcastListen Activity or Fragment?
-                startActivity(intent);
+                //Intent intent = new Intent(Intent.ACTION_VIEW, uri); //change this so that it will move to the PodcastListen Activity or Fragment?
+                Intent in = new Intent(RssActivity.this, ListeningScreenActivity.class);
+                Bundle b = new Bundle();
+                String testy = "https://upload.wikimedia.org/wikipedia/commons/6/6c/Grieg_Lyric_Pieces_Kobold.ogg";
+                b.putString("url",links.get(position));
+                //Log.println(Log.DEBUG,links.get(position));
+                in.putExtras(b);
+                RssActivity.this.startActivity(in);
             }
         });
         new ProcessInBackground().execute();
@@ -129,7 +136,7 @@ public class RssActivity extends AppCompatActivity {
                             }
                         } else if (xpp.getName().equalsIgnoreCase("enclosure")) {
                             if (insideItem) {
-                                links.add(xpp.getAttributeValue(0));            //this gets the mp3 url
+                                links.add(xpp.getAttributeValue(2));            //this gets the mp3 url
                             }
                         }
                     } else if (eventType == XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("item")) {
