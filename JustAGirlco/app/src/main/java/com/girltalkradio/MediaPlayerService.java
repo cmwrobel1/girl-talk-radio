@@ -27,17 +27,17 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
         AudioManager.OnAudioFocusChangeListener {
 
-    private MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
     //path to the audio file
-    private String mediaFile;
+    public String mediaFile;
     //Used to pause/resume MediaPlayer
-    private int resumePosition;
-    private AudioManager audioManager;
+    public int resumePosition;
+    public AudioManager audioManager;
 
     // Binder given to clients
-    private final IBinder iBinder = new LocalBinder();
+    public final IBinder iBinder = new LocalBinder();
 
-    private void initMediaPlayer() {
+    public void initMediaPlayer() {
         mediaPlayer = new MediaPlayer();
         //Set up MediaPlayer event listeners
         mediaPlayer.setOnCompletionListener(this);
@@ -60,27 +60,27 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         mediaPlayer.prepareAsync();
     }
 
-    private void playMedia() {
+    public void playMedia() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
         }
     }
 
-    private void stopMedia() {
+    public void stopMedia() {
         if (mediaPlayer == null) return;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
     }
 
-    private void pauseMedia() {
+    public void pauseMedia() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             resumePosition = mediaPlayer.getCurrentPosition();
         }
     }
 
-    private void resumeMedia() {
+    public void resumeMedia() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.seekTo(resumePosition);
             mediaPlayer.start();
