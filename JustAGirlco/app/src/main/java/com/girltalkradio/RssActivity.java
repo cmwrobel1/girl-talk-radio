@@ -71,6 +71,10 @@ public class RssActivity extends AppCompatActivity {
         links = new ArrayList<String>();
         pictures = new ArrayList<String>();
 
+        titles.add("Jack's MP3 Test");
+        links.add("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3");
+        pictures.add("https://i1.sndcdn.com/artworks-zjw8CwzCVpT3nLGO-tEVPtQ-t500x500.jpg");
+
         lvRss.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

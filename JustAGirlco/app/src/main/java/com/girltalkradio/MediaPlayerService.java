@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import java.io.IOException;
@@ -32,7 +34,11 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     public String mediaFile;
     //Used to pause/resume MediaPlayer
     public int resumePosition;
+
+    public int currentPosition = 0;
     public AudioManager audioManager;
+
+
 
 
     // Binder given to clients
@@ -61,6 +67,14 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         mediaPlayer.prepareAsync();
     }
 
+    public int seekBarGetCurrentPosition() {
+        if(mediaPlayer!=null && mediaPlayer.isPlaying()){
+            currentPosition = mediaPlayer.getCurrentPosition();
+        }
+        return currentPosition;
+
+    }
+
     public void playMedia() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
@@ -78,15 +92,14 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             resumePosition = mediaPlayer.getCurrentPosition();
+            currentPosition = mediaPlayer.getCurrentPosition();
         }
     }
 
-    public int getCurrentTime() {
-        if (mediaPlayer.isPlaying()){
-            return mediaPlayer.getCurrentPosition();
-        }
-        else
-            return 0;
+
+
+    public int getTimer() {
+        return currentPosition;
     }
 
     public int getTotalDuration() {
@@ -98,6 +111,15 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
             mediaPlayer.seekTo(resumePosition);
             mediaPlayer.start();
         }
+    }
+
+    public int showTime(){
+        mediaPlayer.pause();
+        currentPosition = mediaPlayer.getDuration();
+        //String durationText = DateUtils.formatElapsedTime(currentPosition / 1000);
+
+
+        return currentPosition;
     }
 
     public void seekTo(int time) {
@@ -192,7 +214,10 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         super.onDestroy();
         if (mediaPlayer != null) {
             stopMedia();
+            mediaPlayer.stop();
             mediaPlayer.release();
+            mediaPlayer = null;
+
         }
         removeAudioFocus();
     }
