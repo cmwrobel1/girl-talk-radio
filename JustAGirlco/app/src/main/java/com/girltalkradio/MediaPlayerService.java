@@ -34,6 +34,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     public int resumePosition;
     public AudioManager audioManager;
 
+
     // Binder given to clients
     public final IBinder iBinder = new LocalBinder();
 
@@ -80,12 +81,37 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         }
     }
 
+    public int getCurrentTime() {
+        if (mediaPlayer.isPlaying()){
+            return mediaPlayer.getCurrentPosition();
+        }
+        else
+            return 0;
+    }
+
+    public int getTotalDuration() {
+        return mediaPlayer.getDuration();
+    }
+
     public void resumeMedia() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.seekTo(resumePosition);
             mediaPlayer.start();
         }
     }
+
+    public void seekTo(int time) {
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.seekTo(time);
+            mediaPlayer.start();
+        }
+        if(!mediaPlayer.isPlaying()){
+            mediaPlayer.seekTo(time);
+            mediaPlayer.start();
+        }
+    }
+
+
 
     @Override
     public IBinder onBind(Intent intent) {

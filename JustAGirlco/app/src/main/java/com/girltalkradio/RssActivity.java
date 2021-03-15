@@ -57,6 +57,7 @@ public class RssActivity extends AppCompatActivity {
     ListView lvRss;
     ArrayList<String> titles;
     ArrayList<String> links;
+    ArrayList<String> pictures;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,17 +69,22 @@ public class RssActivity extends AppCompatActivity {
         lvRss = (ListView) findViewById(R.id.LvRss);
         titles = new ArrayList<String>();
         links = new ArrayList<String>();
+        pictures = new ArrayList<String>();
+
         lvRss.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Uri uri = Uri.parse(links.get(position));       //this will open an http link to an mp3 file lol
                 //Intent intent = new Intent(Intent.ACTION_VIEW, uri); //change this so that it will move to the PodcastListen Activity or Fragment?
                 Intent in = new Intent(RssActivity.this, ListeningScreenActivity.class);
-                Bundle b = new Bundle();
+                Bundle b1 = new Bundle();
+                Bundle b2 = new Bundle();
                 String testy = "https://upload.wikimedia.org/wikipedia/commons/6/6c/Grieg_Lyric_Pieces_Kobold.ogg";
-                b.putString("url",links.get(position));
+                b1.putString("pic",pictures.get(position));
+                b2.putString("url",links.get(position));
                 //Log.println(Log.DEBUG,links.get(position));
-                in.putExtras(b);
+                in.putExtras(b1);
+                in.putExtras(b2);
                 RssActivity.this.startActivity(in);
             }
         });
@@ -138,6 +144,11 @@ public class RssActivity extends AppCompatActivity {
                             if (insideItem) {
                                 links.add(xpp.getAttributeValue(2));            //this gets the mp3 url
                             }
+                        }
+                          else if (xpp.getName().equalsIgnoreCase("itunes:image")) { //Gets picture for podcast
+                              if (insideItem) {
+                                  pictures.add(xpp.getAttributeValue(0));
+                              }
                         }
                     } else if (eventType == XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("item")) {
                         insideItem = false;

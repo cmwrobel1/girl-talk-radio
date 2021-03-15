@@ -4,13 +4,26 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * This Activity will serve as the calling instance for the MediaPlayerService
@@ -28,7 +41,7 @@ public class ListeningScreenActivity extends AppCompatActivity {
     private MediaPlayerService player;      //instance of the service
     boolean serviceBound = false;
 
-    boolean playing = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,16 +50,37 @@ public class ListeningScreenActivity extends AppCompatActivity {
         Intent in = getIntent();
         Bundle b = in.getExtras();
         String s = b.getString("url");
+        String pic = b.getString("pic");
         ImageButton playButton = (ImageButton) findViewById(R.id.playButton);
         ImageButton pauseButton = (ImageButton) findViewById(R.id.pauseButton);
 
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+
+
+
+
+        ImageView i = (ImageView)findViewById(R.id.imageViewListening);
+        Picasso.get().load(pic).into(i);
+
+
         playButton.setVisibility(View.INVISIBLE);
+
+//        try {
+//            ImageView i = (ImageView)findViewById(R.id.imageViewListening);
+//            Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(pic).getContent());
+//            i.setImageBitmap(bitmap);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
 
        // Uri thePodcast = Uri.parse(b.getString("url")) ;
 
         //Uri uri = Uri.parse()
         playAudio(s);
+
 
         pauseButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -83,6 +117,24 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         });
 
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                //player.seekTo(i);
+                player.seekTo(i*1000);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+               // player.seekTo(seekBar.getProgress());
+            }
+        });
+
 
 
     }
@@ -100,6 +152,16 @@ public class ListeningScreenActivity extends AppCompatActivity {
             //Service is active
             //Send media with BroadcastReceiver
 
+        }
+    }
+
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            return null;
         }
     }
 
