@@ -92,19 +92,21 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             resumePosition = mediaPlayer.getCurrentPosition();
-            currentPosition = mediaPlayer.getCurrentPosition();
+
         }
     }
 
+    public int getPosition(){
+        int num = 0;
 
+            num = mediaPlayer.getCurrentPosition();
 
-    public int getTimer() {
-        return currentPosition;
+        return num;
     }
 
-    public int getTotalDuration() {
-        return mediaPlayer.getDuration();
-    }
+
+
+
 
     public void resumeMedia() {
         if (!mediaPlayer.isPlaying()) {
@@ -113,13 +115,16 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         }
     }
 
-    public int showTime(){
-        mediaPlayer.pause();
-        currentPosition = mediaPlayer.getDuration();
-        //String durationText = DateUtils.formatElapsedTime(currentPosition / 1000);
 
-
-        return currentPosition;
+    public void seeker(){
+        if(mediaPlayer.isPlaying()) {
+            currentPosition = mediaPlayer.getCurrentPosition();
+            Intent in = new Intent(MediaPlayerService.this, ListeningScreenActivity.class);
+            Bundle b = new Bundle();
+            b.putInt("pos",currentPosition);
+            in.putExtras(b);
+            MediaPlayerService.this.startActivity(in);
+        }
     }
 
     public void seekTo(int time) {

@@ -1,5 +1,6 @@
 package com.girltalkradio;
 
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,12 +12,15 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.nfc.Tag;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -43,14 +47,17 @@ import java.net.URL;
  */
 
 
+
 public class ListeningScreenActivity extends AppCompatActivity {
 
-    private MediaPlayerService player;      //instance of the service
+    public MediaPlayerService player;      //instance of the service
     boolean serviceBound = false;
 
     int currentPosition = 0;
+    boolean isRunning = false;
 
-
+    SeekBar seekBar;
+    TextView currTextView;
 
 
     @Override
@@ -80,10 +87,10 @@ public class ListeningScreenActivity extends AppCompatActivity {
         ImageButton playButton = (ImageButton) findViewById(R.id.playButton);
         ImageButton pauseButton = (ImageButton) findViewById(R.id.pauseButton);
 
-        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
 
 
-        TextView currTextView = (TextView) findViewById(R.id.TVcurr);
+        currTextView = (TextView) findViewById(R.id.TVcurr);
         TextView durrTextView = (TextView) findViewById(R.id.TVmax);
 
         //Displaying the max duration of the audio file
@@ -105,15 +112,42 @@ public class ListeningScreenActivity extends AppCompatActivity {
         playButton.setVisibility(View.INVISIBLE);
 
 
-
-
-
-
-
-
+        seekBar.animate();
 
 
         playAudio(s);
+
+        new ListeningScreenActivity.ProcessInBackground().execute();
+//        player.seeker();
+//        String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
+//        currTextView.setText(stringTest);
+
+
+        //currTextView.setText(player.getPosition());
+
+//            for(int x=0; x<100;x++) {
+//                seekBar.setProgress(getPos());
+//                String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
+//                currTextView.setText(stringTest);
+//            }
+
+
+       // int curPos = player.getPosition();
+
+//       tStart();
+
+
+
+
+
+        //handler.postDelayed(r, 1000);
+
+
+
+
+
+
+
 
 
         pauseButton.setOnClickListener(new View.OnClickListener(){
@@ -123,6 +157,8 @@ public class ListeningScreenActivity extends AppCompatActivity {
                 player.pauseMedia();
                 pauseButton.setVisibility(View.INVISIBLE);
                 playButton.setVisibility(View.VISIBLE);
+
+
 
             }
         });
@@ -145,6 +181,8 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
 
 
+
+
                 //pauseAudio(s);
             }
 
@@ -153,9 +191,12 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            public void onProgressChanged(SeekBar seekBar, int i, boolean user) {
                 //player.seekTo(i);
-                player.seekTo(i*1000);
+                if(user) {
+                    player.seekTo(i * 1000);
+                }
+
             }
 
             @Override
@@ -170,55 +211,105 @@ public class ListeningScreenActivity extends AppCompatActivity {
         });
 
 
-
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        Intent intent = new Intent(this,MediaPlayerService.class);
-//        bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
-//        getSeekBarStatus();
+    public class ProcessInBackground extends AsyncTask<Integer, Void, Exception>{
+        ProgressDialog progressDialog = new ProgressDialog(ListeningScreenActivity.this);
+        Exception exception = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog.setMessage("Test");        //message for long loading screen
+            progressDialog.show();
+        }
+
+        @Override
+        protected Exception doInBackground(Integer... integers) {
+            try{
+                player.seeker();
+                String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
+                currTextView.setText(stringTest);
+            }catch(Exception e){
+                exception = e;
+            }
+            return exception;
+        }
+        @Override
+        protected void onPostExecute(Exception s) {
+            super.onPostExecute(s);
+            progressDialog.dismiss();
+        }
+    }
+
+
+
+//    public void tStart(){
+//        isRunning = true;
+//        myThread thread = new myThread();
+//        thread.start();
 //    }
-//
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        if(serviceBound){
-//            unbindService(serviceConnection);
-//            serviceBound = false;
-//        }
+//    public void tStop(){
+//        isRunning = false;
 //    }
+
+//    class myThread extends Thread{
+//        @Override
+//        public void run(){
+//            while(isRunning){
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
 //
-//    public int getMediaPlayerCurrentPosition(){
-//        if(serviceBound){
-//            if(player!=null){
-//                currentPosition=player.seekBarGetCurrentPosition();
+//                            try {
+//                                Thread.sleep(1000);
+//                            }catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                            seekBar.setProgress(getPos());
+//                            String s = DateUtils.formatElapsedTime(getPos() / 1000);
+//                            currTextView.setText(s);
+//                        }
 //
-//            }
-//        }
-//        return currentPosition;
-//    }
-//
-//    public void getSeekBarStatus(){
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                int total = player.getTotalDuration();
-//                int CurrentPosition = 0;
-//
-//                while(CurrentPosition<total){
-//                    try{
-//                        Thread.sleep(1000);
-//                        CurrentPosition=getMediaPlayerCurrentPosition();
-//
-//                    } catch(InterruptedException e){
-//                        return;
-//                    }seekBar.setProgress(CurrentPosition);
+//                });
+//                try {
+//                    Thread.sleep(1000);
+//                }catch (InterruptedException e) {
+//                    e.printStackTrace();
 //                }
 //            }
-//        }).start();
+//        }
+//
 //    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Bind to LocalService
+        Intent intent = new Intent(this, MediaPlayerService.class);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unbindService(serviceConnection);
+        serviceBound = false;
+    }
+
+
+
+
+
+
+    public int getPos(){
+        Intent in = getIntent();
+        Bundle b = in.getExtras();
+        int p = b.getInt("pos");
+        return p;
+
+    }
 
 
     private void pauseAudio(String media) {
