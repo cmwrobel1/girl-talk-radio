@@ -22,10 +22,5 @@
         android:name="com.girltalkradio.ui.multimedia.MultimediaFragment"
         android:label="@string/menu_multimedia"
         tools:layout="@layout/fragment_multimedia" />
-    <activity
-        android:id="@+id/navtest"
-        android:name="com.girltalkradio.Navtest"
-        android:label="activity_navtest"
-        tools:layout="@layout/activity_navtest" />
 
-</navi`sa```````````````````````````````````gation>
+</navigation>
