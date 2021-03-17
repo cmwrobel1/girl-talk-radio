@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import java.io.IOException;
@@ -27,17 +29,22 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
 
         AudioManager.OnAudioFocusChangeListener {
 
-    private MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
     //path to the audio file
-    private String mediaFile;
+    public String mediaFile;
     //Used to pause/resume MediaPlayer
-    private int resumePosition;
-    private AudioManager audioManager;
+    public int resumePosition;
+
+    public int currentPosition = 0;
+    public AudioManager audioManager;
+
+
+
 
     // Binder given to clients
-    private final IBinder iBinder = new LocalBinder();
+    public final IBinder iBinder = new LocalBinder();
 
-    private void initMediaPlayer() {
+    public void initMediaPlayer() {
         mediaPlayer = new MediaPlayer();
         //Set up MediaPlayer event listeners
         mediaPlayer.setOnCompletionListener(this);
@@ -60,32 +67,78 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         mediaPlayer.prepareAsync();
     }
 
-    private void playMedia() {
+    public int seekBarGetCurrentPosition() {
+        if(mediaPlayer!=null && mediaPlayer.isPlaying()){
+            currentPosition = mediaPlayer.getCurrentPosition();
+        }
+        return currentPosition;
+
+    }
+
+    public void playMedia() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.start();
         }
     }
 
-    private void stopMedia() {
+    public void stopMedia() {
         if (mediaPlayer == null) return;
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
         }
     }
 
-    private void pauseMedia() {
+    public void pauseMedia() {
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
             resumePosition = mediaPlayer.getCurrentPosition();
+
         }
     }
 
-    private void resumeMedia() {
+    public int getPosition(){
+        int num = 0;
+
+            num = mediaPlayer.getCurrentPosition();
+
+        return num;
+    }
+
+
+
+
+
+    public void resumeMedia() {
         if (!mediaPlayer.isPlaying()) {
             mediaPlayer.seekTo(resumePosition);
             mediaPlayer.start();
         }
     }
+
+
+    public void seeker(){
+        if(mediaPlayer.isPlaying()) {
+            currentPosition = mediaPlayer.getCurrentPosition();
+            Intent in = new Intent(MediaPlayerService.this, ListeningScreenActivity.class);
+            Bundle b = new Bundle();
+            b.putInt("pos",currentPosition);
+            in.putExtras(b);
+            MediaPlayerService.this.startActivity(in);
+        }
+    }
+
+    public void seekTo(int time) {
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.seekTo(time);
+            mediaPlayer.start();
+        }
+        if(!mediaPlayer.isPlaying()){
+            mediaPlayer.seekTo(time);
+            mediaPlayer.start();
+        }
+    }
+
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -166,7 +219,10 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         super.onDestroy();
         if (mediaPlayer != null) {
             stopMedia();
+            mediaPlayer.stop();
             mediaPlayer.release();
+            mediaPlayer = null;
+
         }
         removeAudioFocus();
     }
