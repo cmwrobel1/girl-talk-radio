@@ -71,9 +71,6 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         //int time = player.showTime();
 
-
-
-
         Intent in = getIntent();
         Bundle b = in.getExtras();
         String s = b.getString("url");
@@ -135,24 +132,10 @@ public class ListeningScreenActivity extends AppCompatActivity {
 //                currTextView.setText(stringTest);
 //            }
 
-
        // int curPos = player.getPosition();
 
 //       tStart();
-
-
-
-
-
         //handler.postDelayed(r, 1000);
-
-
-
-
-
-
-
-
 
         pauseButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -161,8 +144,6 @@ public class ListeningScreenActivity extends AppCompatActivity {
                 player.pauseMedia();
                 pauseButton.setVisibility(View.INVISIBLE);
                 playButton.setVisibility(View.VISIBLE);
-
-
 
             }
         });
@@ -175,22 +156,7 @@ public class ListeningScreenActivity extends AppCompatActivity {
                 pauseButton.setVisibility(View.VISIBLE);
                 playButton.setVisibility(View.INVISIBLE);
 
-
-
-
-
-
-
-
-
-
-
-
-
-                //pauseAudio(s);
             }
-
-
         });
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
