@@ -117,7 +117,11 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         playAudio(s);
 
-        new ListeningScreenActivity.ProcessInBackground().execute();
+        seekBar.setProgress(getPos());
+        String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
+        currTextView.setText(stringTest);
+
+ //       new ListeningScreenActivity.ProcessInBackground().execute();
 //        player.seeker();
 //        String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
 //        currTextView.setText(stringTest);
@@ -213,34 +217,34 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
     }
 
-    public class ProcessInBackground extends AsyncTask<Integer, Void, Exception>{
-        ProgressDialog progressDialog = new ProgressDialog(ListeningScreenActivity.this);
-        Exception exception = null;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog.setMessage("Test");        //message for long loading screen
-            progressDialog.show();
-        }
-
-        @Override
-        protected Exception doInBackground(Integer... integers) {
-            try{
-                player.seeker();
-                String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
-                currTextView.setText(stringTest);
-            }catch(Exception e){
-                exception = e;
-            }
-            return exception;
-        }
-        @Override
-        protected void onPostExecute(Exception s) {
-            super.onPostExecute(s);
-            progressDialog.dismiss();
-        }
-    }
+//    public class ProcessInBackground extends AsyncTask<Integer, Void, Exception>{
+//        ProgressDialog progressDialog = new ProgressDialog(ListeningScreenActivity.this);
+//        Exception exception = null;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            progressDialog.setMessage("Test");        //message for long loading screen
+//            progressDialog.show();
+//        }
+//
+//        @Override
+//        protected Exception doInBackground(Integer... integers) {
+//            try{
+//                player.seeker();
+//                String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
+//                currTextView.setText(stringTest);
+//            }catch(Exception e){
+//                exception = e;
+//            }
+//            return exception;
+//        }
+//        @Override
+//        protected void onPostExecute(Exception s) {
+//            super.onPostExecute(s);
+//            progressDialog.dismiss();
+//        }
+//    }
 
 
 
