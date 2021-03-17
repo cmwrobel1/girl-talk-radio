@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_top_10">
+    app:startDestination="@+id/nav_podcasts">
 
     <fragment
         android:id="@+id/nav_top_10"
@@ -22,5 +22,10 @@
         android:name="com.girltalkradio.ui.multimedia.MultimediaFragment"
         android:label="@string/menu_multimedia"
         tools:layout="@layout/fragment_multimedia" />
+    <activity
+        android:id="@+id/navtest"
+        android:name="com.girltalkradio.Navtest"
+        android:label="activity_navtest"
+        tools:layout="@layout/activity_navtest" />
 
-</navigation>
+</navi`sa```````````````````````````````````gation>
