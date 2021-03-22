@@ -2,6 +2,7 @@ package com.girltalkradio;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -18,10 +19,13 @@ public class RssReader {
     ArrayList<String> links;
 
     private String rssAuthorImage;
+    private String rssAuthorTitle;
     private String rss;
+
 
     public RssReader(String rss){
         this.rss = rss;
+
     }
 
     //make a connection with the podcast URL
@@ -35,9 +39,12 @@ public class RssReader {
         }
     }
 
+    //getters
     public String getRssImage() {
+//        Log.d("getRss",titles.get(0));
         return rssAuthorImage;
     }
+    public String getRssTitle(){ return rssAuthorTitle;}
 
     //go into a new thread to read the document
     public class ProcessInBackground extends AsyncTask<Integer, Void, Exception> {
@@ -67,11 +74,13 @@ public class RssReader {
                 boolean insideImageTag = false;
                 int eventType = xpp.getEventType();     //this tells you what thing ur on in the while loop below
 
+                Log.d("CHECK", "can i log in here?");
                 while (eventType != XmlPullParser.END_DOCUMENT) {     //keep executing until you reach end of document
                     if (eventType == XmlPullParser.START_TAG) {
+                        //specific podcast info
                         if (xpp.getName().equalsIgnoreCase("item")) {
                             insideItem = true;
-                        } else if (xpp.getName().equalsIgnoreCase("title")) {
+                        }else if (xpp.getName().equalsIgnoreCase("title")) {
                             //first make sure you're inside an item tag
                             if (insideItem) {
                                 //save the title into the titles array list
@@ -82,19 +91,31 @@ public class RssReader {
                                 links.add(xpp.getAttributeValue(2));            //this gets the mp3 url
                             }
                         }
+
+                        //Author Image and Author Title urls
+                        if (eventType == XmlPullParser.START_TAG && xpp.getName().equalsIgnoreCase("image") ){
+                            insideImageTag = true;
+                        }else if (xpp.getName().equalsIgnoreCase("url")){
+                            if(insideImageTag){
+                                rssAuthorImage = xpp.nextText();
+                            }
+                        }
+                        else if (xpp.getName().equalsIgnoreCase("title")){
+                            if(insideImageTag){
+                                rssAuthorTitle = xpp.nextText();
+                            }
+                        }
+
                     } else if (eventType == XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("item")) {
                         insideItem = false;
                     }
-                    else if (eventType == XmlPullParser.START_TAG && xpp.getName().equalsIgnoreCase("image") ){
-                        insideImageTag = true;
+                    else if (eventType == XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("image")) {
+                        insideImageTag = false;
                     }
-                    else if (xpp.getName().equalsIgnoreCase("url")){
-                        if(insideImageTag){
-                            rssAuthorImage = xpp.getAttributeValue(1);
-                        }
-                    }
+
                     eventType = xpp.next();
                 }
+
 
             } catch (MalformedURLException e) {    //if url is not correct
                 exception = e;

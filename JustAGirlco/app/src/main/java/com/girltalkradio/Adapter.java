@@ -1,6 +1,7 @@
 package com.girltalkradio;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +13,21 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     List<String> titles;
-    List<Integer>images;
+   // List<Integer>images;
+    List<String>imageStrings;
     LayoutInflater inflater;
+    Context context;
 
-    public Adapter(Context ctx, List<String> titles, List<Integer> images){
+    public Adapter(Context ctx, List<String> titles,List<String> imagesStr){
         this.titles = titles;
-        this.images = images;
+        //this.images = images;
+        this.imageStrings = imagesStr;
+        this.context = ctx;
         this.inflater = LayoutInflater.from(ctx);
     }
 
@@ -34,7 +41,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.title.setText(titles.get(position));
-        holder.gridIcon.setImageResource(images.get(position));
+        //convert the images to urls and use picasso?
+        Uri authorImage = Uri.parse(imageStrings.get(position));       //convert the string to uri
+        Picasso.get().load(authorImage).into(holder.gridIcon);
+      //  holder.gridIcon.setImageResource(images.get(position));
     }
 
     @Override
