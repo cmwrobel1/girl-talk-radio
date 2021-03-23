@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.girltalkradio.ui.podcasts.PodcastsFragment;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -48,14 +50,14 @@ public class RssReader {
 
     //go into a new thread to read the document
     public class ProcessInBackground extends AsyncTask<Integer, Void, Exception> {
-        // ProgressDialog progressDialog = new ProgressDialog(RssActivity.class);
+       // ProgressDialog progressDialog = new ProgressDialog(getActivity());
         Exception exception = null;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //  progressDialog.setMessage("Rss feed is loading.. please wait.. :)");        //message for long loading screen
-            // progressDialog.show();
+          //  progressDialog.setMessage("Rss feed is loading.. please wait.. :)");        //message for long loading screen
+          //   progressDialog.show();
         }
 
         @Override
@@ -126,6 +128,13 @@ public class RssReader {
             }
             return exception;
         }
+
+//        @Override
+        protected void onPostExecute(String rssImageUrl) {
+            //return what the other code will need
+
+        }
+
     }
 
 
