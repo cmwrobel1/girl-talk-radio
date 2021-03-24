@@ -2,31 +2,22 @@ package com.girltalkradio.ui.podcasts;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.girltalkradio.Adapter;
 import com.girltalkradio.R;
-import com.girltalkradio.RssActivity;
-import com.girltalkradio.RssReader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,8 +26,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import com.squareup.picasso.Picasso;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -52,11 +41,11 @@ public class PodcastsFragment extends Fragment {
 
     List<String> titles;
     List<String> imageStrings;
+
     Adapter adapter;
-    RssReader reader;
     String rss;
 
-    String[] hardcodedScumPodcasts = {"https://anchor.fm/s/a3e10d4/podcast/rss","https://anchor.fm/s/7f66de4/podcast/rss","https://feed.podbean.com/hotflashescooltopics/feed.xml","http://www.omnycontent.com/d/playlist/f4077a89-6f34-4e4a-88a6-a89e006843e6/117a7e3a-81a5-44f1-9a86-a8a4018720a0/e2ba843f-68dd-4fce-becd-a8a401872217/podcast.rss","https://anchor.fm/s/3b2d3670/podcast/rss"};
+    String[] hardcodedScumPodcasts = {"https://anchor.fm/s/a3e10d4/podcast/rss","https://anchor.fm/s/7f66de4/podcast/rss","https://feed.podbean.com/hotflashescooltopics/feed.xml","https://www.omnycontent.com/d/playlist/f4077a89-6f34-4e4a-88a6-a89e006843e6/117a7e3a-81a5-44f1-9a86-a8a4018720a0/e2ba843f-68dd-4fce-becd-a8a401872217/podcast.rss","https://anchor.fm/s/3b2d3670/podcast/rss"};
     private String[] rssAuthorImage = new String[hardcodedScumPodcasts.length];
     private String[] rssAuthorTitle = new String[hardcodedScumPodcasts.length];
 
@@ -69,6 +58,7 @@ public class PodcastsFragment extends Fragment {
         podcastList = root.findViewById(R.id.podcast_list);      //recycler view
         titles = new ArrayList<>();
         imageStrings = new ArrayList<>();
+
 
 
         //executing the AsyncThread to get the images and titles
@@ -180,6 +170,12 @@ public class PodcastsFragment extends Fragment {
                 }
             }
             return exception;
+        }
+
+        @Override
+        protected void onPostExecute(Exception s) {
+            super.onPostExecute(s);
+            progressDialog.dismiss();
         }
     }
 }

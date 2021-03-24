@@ -18,14 +18,13 @@ import com.squareup.picasso.Picasso;
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     List<String> titles;
-   // List<Integer>images;
     List<String>imageStrings;
+    List<String>descriptions;
     LayoutInflater inflater;
     Context context;
 
     public Adapter(Context ctx, List<String> titles,List<String> imagesStr){
         this.titles = titles;
-        //this.images = images;
         this.imageStrings = imagesStr;
         this.context = ctx;
         this.inflater = LayoutInflater.from(ctx);
