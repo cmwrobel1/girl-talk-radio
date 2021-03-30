@@ -23,7 +23,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity implements PodcastsFragment.onFragmentBtnSelected {
+                                                    //implements PodcastsFragment.onFragmentBtnSelected
+public class MainActivity extends AppCompatActivity {
     //passes the button - might need more efficient way to do this
     private AppBarConfiguration mAppBarConfiguration;
     DrawerLayout drawer;
@@ -62,16 +63,17 @@ public class MainActivity extends AppCompatActivity implements PodcastsFragment.
     }
 
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
-    }
+//    @Override
+//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//        return false;
+//    }
 
     //button code that when this function is executed from the click event then it will handle the
     //new activity startup
-    @Override
-    public void onButtonSelected() {
-        Intent in = new Intent(MainActivity.this, RssActivity.class);
-        MainActivity.this.startActivity(in);
-    }
+//    @Override
+//    public void onButtonSelected() {
+//        Intent in = new Intent(MainActivity.this, RssActivity.class);
+//        MainActivity.this.startActivity(in);
+//    }
+
 }

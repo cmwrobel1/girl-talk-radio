@@ -58,6 +58,7 @@ public class RssActivity extends AppCompatActivity {
     ArrayList<String> titles;
     ArrayList<String> links;
     ArrayList<String> pictures;
+    String podcastFromRecycler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,8 @@ public class RssActivity extends AppCompatActivity {
         links.add("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3");
         pictures.add("https://i1.sndcdn.com/artworks-zjw8CwzCVpT3nLGO-tEVPtQ-t500x500.jpg");
 
+        Bundle b = intent.getExtras();
+        podcastFromRecycler = b.getString("url");
 
 
         lvRss.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -85,10 +88,9 @@ public class RssActivity extends AppCompatActivity {
                 Intent in = new Intent(RssActivity.this, ListeningScreenActivity.class);
                 Bundle b1 = new Bundle();
                 Bundle b2 = new Bundle();
-                String testy = "https://upload.wikimedia.org/wikipedia/commons/6/6c/Grieg_Lyric_Pieces_Kobold.ogg";
                 b1.putString("pic",pictures.get(position));
                 b2.putString("url",links.get(position));
-                //Log.println(Log.DEBUG,links.get(position));
+                Log.d("LISTEN URL",links.get(position));
                 in.putExtras(b1);
                 in.putExtras(b2);
                 RssActivity.this.startActivity(in);
@@ -125,7 +127,7 @@ public class RssActivity extends AppCompatActivity {
         protected Exception doInBackground(Integer... params) {
 
             try {
-                URL url = new URL("https://feeds.simplecast.com/LByyURqx");       //girl talk radio RSS feed
+                URL url = new URL(podcastFromRecycler);       //girl talk radio RSS feed
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();          //xml pull parser gets data from rss xml doc
 
                 factory.setNamespaceAware(false); //no support for xml namespaces?
@@ -148,7 +150,7 @@ public class RssActivity extends AppCompatActivity {
                             }
                         } else if (xpp.getName().equalsIgnoreCase("enclosure")) {
                             if (insideItem) {
-                                links.add(xpp.getAttributeValue(2));            //this gets the mp3 url
+                                links.add(xpp.getAttributeValue(0));            //this gets the mp3 url
                             }
                         }
                           else if (xpp.getName().equalsIgnoreCase("itunes:image")) { //Gets picture for podcast

@@ -22,11 +22,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     List<String>descriptions;
     LayoutInflater inflater;
     Context context;
+    private onPodcastListener onPodcastListener;
 
-    public Adapter(Context ctx, List<String> titles,List<String> imagesStr){
+    public Adapter(Context ctx, List<String> titles,List<String> imagesStr,onPodcastListener onPodcastListener){
         this.titles = titles;
         this.imageStrings = imagesStr;
         this.context = ctx;
+        this.onPodcastListener = onPodcastListener;
         this.inflater = LayoutInflater.from(ctx);
     }
 
@@ -34,7 +36,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_grid_layout,parent,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view,onPodcastListener);
     }
 
     @Override
@@ -51,15 +53,28 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return titles.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView title;
         ImageView gridIcon;
+        onPodcastListener onPodcastListener;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, onPodcastListener onPodcastListener) {
             super(itemView);
             title = itemView.findViewById(R.id.textView2);
             gridIcon = itemView.findViewById(R.id.imageView2);
+            this.onPodcastListener = onPodcastListener;
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            onPodcastListener.onPodcastListner(getAdapterPosition());
+            //CREATE THE ONPODCASTCLICKFUNCTION
+        }
+    }
+
+    public interface onPodcastListener{
+        void onPodcastListner(int position);
     }
 
 
