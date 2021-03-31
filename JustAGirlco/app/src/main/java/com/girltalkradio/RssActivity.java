@@ -90,7 +90,6 @@ public class RssActivity extends AppCompatActivity {
                 Bundle b2 = new Bundle();
                 b1.putString("pic",pictures.get(position));
                 b2.putString("url",links.get(position));
-                Log.d("LISTEN URL",links.get(position));
                 in.putExtras(b1);
                 in.putExtras(b2);
                 RssActivity.this.startActivity(in);
