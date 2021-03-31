@@ -67,13 +67,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
         mediaPlayer.prepareAsync();
     }
 
-    public int seekBarGetCurrentPosition() {
-        if(mediaPlayer!=null && mediaPlayer.isPlaying()){
-            currentPosition = mediaPlayer.getCurrentPosition();
-        }
-        return currentPosition;
 
-    }
 
     public void playMedia() {
         if (!mediaPlayer.isPlaying()) {
