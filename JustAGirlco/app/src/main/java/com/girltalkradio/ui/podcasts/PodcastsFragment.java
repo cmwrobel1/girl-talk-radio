@@ -100,28 +100,9 @@ public class PodcastsFragment extends Fragment implements Adapter.onPodcastListe
         podcastList.setLayoutManager(gridLayoutManager);
         podcastList.setAdapter(adapter);
 
-        //button create
-//        Button clickme = root.findViewById(R.id.button2);
-//        clickme.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v){
-//                listener.onButtonSelected();
-//            }
-//        });
-
         return root;
 
     }
-    //attach button to the fragment
-//    public void onAttach(@NonNull Context context){
-//        super.onAttach(context);
-//        if(context instanceof onFragmentBtnSelected) {
-//            listener = (onFragmentBtnSelected) context;
-//        }
-//        else {
-//            throw new ClassCastException(context.toString() + " must implement listener");
-//        }
-//    }
 
     @Override
     public void onPodcastListner(int position) {
@@ -132,13 +113,6 @@ public class PodcastsFragment extends Fragment implements Adapter.onPodcastListe
         in.putExtras(b1);
         getActivity().startActivity(in);
     }
-
-
-    //this is the function that will pass the button click listener between the activity and the fragment
-//    public interface onFragmentBtnSelected{
-//        boolean onNavigationItemSelected(@NonNull MenuItem item);
-//        public void onButtonSelected();
-//    }
 
 
     public InputStream getInputStream(URL url) {

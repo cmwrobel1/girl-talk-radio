@@ -42,10 +42,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.title.setText(titles.get(position));
-        //convert the images to urls and use picasso?
-        Uri authorImage = Uri.parse(imageStrings.get(position));       //convert the string to uri
+        //convert the images to urls and use picasso to load it into the app
+        Uri authorImage = Uri.parse(imageStrings.get(position));
         Picasso.get().load(authorImage).into(holder.gridIcon);
-      //  holder.gridIcon.setImageResource(images.get(position));
     }
 
     @Override
@@ -69,7 +68,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         @Override
         public void onClick(View v) {
             onPodcastListener.onPodcastListner(getAdapterPosition());
-            //CREATE THE ONPODCASTCLICKFUNCTION
         }
     }
 

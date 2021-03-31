@@ -63,17 +63,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        return false;
-//    }
-
-    //button code that when this function is executed from the click event then it will handle the
-    //new activity startup
-//    @Override
-//    public void onButtonSelected() {
-//        Intent in = new Intent(MainActivity.this, RssActivity.class);
-//        MainActivity.this.startActivity(in);
-//    }
-
 }
