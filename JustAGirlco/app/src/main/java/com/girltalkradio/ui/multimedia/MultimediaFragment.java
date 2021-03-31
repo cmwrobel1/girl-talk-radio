@@ -22,6 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class MultimediaFragment extends Fragment {
 
     private MultimediaViewModel multimediaViewModel;
@@ -36,10 +39,11 @@ public class MultimediaFragment extends Fragment {
         DatabaseReference databaseReference = firebaseDatabase.getReference("multimedia");
         DatabaseReference getImage = databaseReference.child("profilePic").child("imageUrl");
 
-        getImage.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String link = snapshot.getValue(String.class);
+                ArrayList<String> temp = collectImages((Map<String, Object>) snapshot.getValue());
+                String link = temp.get(1);//snapshot.getValue(String.class);
                 Picasso.get().load(link).into(multImage);
             }
 
@@ -50,5 +54,14 @@ public class MultimediaFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private ArrayList<String> collectImages(Map<String, Object> images) {
+        ArrayList<String> imageUrls = new ArrayList<>();
+        for (Map.Entry<String, Object> entry : images.entrySet()) {
+            Map singleImage = (Map) entry.getValue();
+            imageUrls.add((String) singleImage.get("imageUrl"));
+        }
+        return imageUrls;
     }
 }
