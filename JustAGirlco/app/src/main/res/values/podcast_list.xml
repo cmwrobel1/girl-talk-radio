@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="BTSPodcast">https://anchor.fm/s/7f66de4/podcast/rss</string>
+    <string name="CompilherPodcast">https://anchor.fm/s/a3e10d4/podcast/rss</string>
+    <string name="HotFlashesandCoolTopics">https://feed.podbean.com/hotflashescooltopics/feed.xml</string>
+    <string name="HongKongConfidential">http://www.omnycontent.com/d/playlist/f4077a89-6f34-4e4a-88a6-a89e006843e6/117a7e3a-81a5-44f1-9a86-a8a4018720a0/e2ba843f-68dd-4fce-becd-a8a401872217/podcast.rss</string>
+    <string name="RelateWithGift">https://anchor.fm/s/3b2d3670/podcast/rss</string>
+</resources>
