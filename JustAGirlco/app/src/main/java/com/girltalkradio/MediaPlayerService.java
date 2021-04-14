@@ -36,6 +36,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     public int resumePosition;
 
     public int currentPosition = 0;
+    int maxVolume = 50;
     public AudioManager audioManager;
 
 
@@ -68,6 +69,11 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     }
 
 
+    public void setVolume(int currVolume, int maxVolume){
+        float log1=(float)(Math.log(maxVolume-currVolume)/Math.log(maxVolume));
+        mediaPlayer.setVolume(log1,log1);
+    }
+
 
     public void playMedia() {
         if (!mediaPlayer.isPlaying()) {
@@ -93,7 +99,7 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
     public int getPosition(){
         int num = 0;
 
-            num = mediaPlayer.getCurrentPosition();
+        num = mediaPlayer.getCurrentPosition();
 
         return num;
     }
@@ -130,6 +136,13 @@ public class MediaPlayerService extends Service implements MediaPlayer.OnComplet
             mediaPlayer.seekTo(time);
             mediaPlayer.start();
         }
+    }
+    public void seekBack15Seconds(){
+        mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() - 15000);
+    }
+
+    public void seekForward15Seconds(){
+        mediaPlayer.seekTo(mediaPlayer.getCurrentPosition() + 15000);
     }
 
 
