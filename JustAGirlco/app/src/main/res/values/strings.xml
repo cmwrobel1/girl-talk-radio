@@ -14,6 +14,7 @@
     <string name="hint_password">Password</string>
     <string name="hint_name">Fullname</string>
     <string name="btn_login">LOGIN</string>
+    <string name="btn_google">Login with Google</string>
     <string name="btn_link_to_register">Not a member? Sign up now!</string>
     <string name="btn_link_to_login">Already registered. Log Me In!</string>
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
@@ -51,5 +52,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="prompt_password">Enter Password</string>
 
 </resources>
