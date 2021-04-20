@@ -1,6 +1,7 @@
 package com.girltalkradio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,8 @@ public class MultimediaAdapter extends RecyclerView.Adapter<MultimediaAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.title.setText(multimediaPosts.get(position).getTitle());
+        holder.creator.setText("By " + multimediaPosts.get(position).getCreator());
+        holder.url = multimediaPosts.get(position).getLink();
         //convert the images to urls and use picasso to load it into the app
         Uri image = Uri.parse(multimediaPosts.get(position).getImageUrl());
         Picasso.get().load(image).into(holder.gridIcon);
@@ -49,18 +52,23 @@ public class MultimediaAdapter extends RecyclerView.Adapter<MultimediaAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView creator;
         TextView title;
         ImageView gridIcon;
+        String url;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.textView2);
-            gridIcon = itemView.findViewById(R.id.imageView2);
+            creator = itemView.findViewById(R.id.creator);
+            title = itemView.findViewById(R.id.title);
+            gridIcon = itemView.findViewById(R.id.multImage);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
+            Intent link = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            context.startActivity(link);
         }
     }
 }
