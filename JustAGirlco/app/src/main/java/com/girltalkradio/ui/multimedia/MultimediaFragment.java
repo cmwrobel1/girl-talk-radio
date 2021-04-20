@@ -30,8 +30,6 @@ public class MultimediaFragment extends Fragment {
     RecyclerView multList;
 
     List<MultimediaPost> multimediaPostList = new ArrayList<>();
-    List<String> texts = new ArrayList<>();
-    List<String> imageStrings = new ArrayList<>();
 
     MultimediaAdapter adapter;
 
@@ -46,14 +44,12 @@ public class MultimediaFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                texts.clear();
-                imageStrings.clear();
+                multimediaPostList.clear();
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     MultimediaPost multimediaPost = postSnapshot.getValue(MultimediaPost.class);
-                    texts.add(multimediaPost.getText());
-                    imageStrings.add(multimediaPost.getImageUrl());
+                    multimediaPostList.add(multimediaPost);
                 }
-                adapter = new MultimediaAdapter(getActivity(), texts, imageStrings);
+                adapter = new MultimediaAdapter(getActivity(), multimediaPostList);
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false);
                 multList.setLayoutManager(gridLayoutManager);
                 multList.setAdapter(adapter);

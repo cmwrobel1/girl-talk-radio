@@ -13,18 +13,17 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.girltalkradio.ui.multimedia.MultimediaPost;
 import com.squareup.picasso.Picasso;
 
 public class MultimediaAdapter extends RecyclerView.Adapter<MultimediaAdapter.ViewHolder> {
 
-    List<String> texts;
-    List<String> imageStrings;
+    List<MultimediaPost> multimediaPosts;
     LayoutInflater inflater;
     Context context;
 
-    public MultimediaAdapter (Context ctx, List<String> titles, List<String> imagesStr){
-        this.texts = titles;
-        this.imageStrings = imagesStr;
+    public MultimediaAdapter (Context ctx, List<MultimediaPost> multimediaPosts){
+        this.multimediaPosts = multimediaPosts;
         this.context = ctx;
         this.inflater = LayoutInflater.from(ctx);
     }
@@ -38,15 +37,15 @@ public class MultimediaAdapter extends RecyclerView.Adapter<MultimediaAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.title.setText(texts.get(position));
+        holder.title.setText(multimediaPosts.get(position).getTitle());
         //convert the images to urls and use picasso to load it into the app
-        Uri authorImage = Uri.parse(imageStrings.get(position));
-        Picasso.get().load(authorImage).into(holder.gridIcon);
+        Uri image = Uri.parse(multimediaPosts.get(position).getImageUrl());
+        Picasso.get().load(image).into(holder.gridIcon);
     }
 
     @Override
     public int getItemCount() {
-        return texts.size();
+        return multimediaPosts.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
