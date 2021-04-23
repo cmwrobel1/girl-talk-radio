@@ -6,16 +6,18 @@ public class MultimediaPost {
     private String imageUrl;
     private String link;
     private String title;
+    private long order;
 
     public MultimediaPost(){
 
     }
 
-    public MultimediaPost(String creator, String imageUrl, String link, String title) {
+    public MultimediaPost(String creator, String imageUrl, String link, String title, long order) {
         this.creator = creator;
         this.imageUrl = imageUrl;
         this.link = link;
         this.title = title;
+        this.order = order;
     }
 
     public String getCreator() {
@@ -33,4 +35,6 @@ public class MultimediaPost {
     public String getTitle() {
         return title;
     }
+
+    public long getOrder() { return order; }
 }

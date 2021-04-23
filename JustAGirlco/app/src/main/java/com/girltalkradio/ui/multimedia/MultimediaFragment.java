@@ -39,7 +39,7 @@ public class MultimediaFragment extends Fragment {
 
         multList = root.findViewById(R.id.multimedia_list);
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = firebaseDatabase.getReference("multimedia");
+        DatabaseReference databaseReference = firebaseDatabase.getReferenceFromUrl("https://justagirlco-b4de1-default-rtdb.firebaseio.com/1StAH6C83cDbx5l8WidtkteVUpwXHi2DBcpJtd4WGpCY/multimedia");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -50,14 +50,14 @@ public class MultimediaFragment extends Fragment {
                     multimediaPostList.add(multimediaPost);
                 }
                 adapter = new MultimediaAdapter(getActivity(), multimediaPostList);
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),2,GridLayoutManager.VERTICAL,false);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),1,GridLayoutManager.VERTICAL,false);
                 multList.setLayoutManager(gridLayoutManager);
                 multList.setAdapter(adapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity(), "Error Loading Image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
