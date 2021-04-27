@@ -1,18 +1,27 @@
 {
   "project_info": {
     "project_number": "620011744050",
+    "firebase_url": "https://justagirlco-b4de1-default-rtdb.firebaseio.com",
     "project_id": "justagirlco-b4de1",
     "storage_bucket": "justagirlco-b4de1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:620011744050:android:72148381f373a88db0452b",
+        "mobilesdk_app_id": "1:620011744050:android:58cbfc8b6159b8ddb0452b",
         "android_client_info": {
-          "package_name": "com.girltalkradio"
+          "package_name": "com.justagirlco"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "620011744050-35ga28ecptsvd8sn1qfknt6ib37kmj5h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.justagirlco",
+            "certificate_hash": "7dd977de87a0a8ff2d76ac1273787d706cd0b72f"
+          }
+        },
         {
           "client_id": "620011744050-t68qbasdee3jf4c58vvkop732107ouv6.apps.googleusercontent.com",
           "client_type": 3

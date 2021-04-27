@@ -23,7 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity implements PodcastsFragment.onFragmentBtnSelected {
     //passes the button - might need more efficient way to do this
     private AppBarConfiguration mAppBarConfiguration;
-    MenuItem btnLogout;
+    private Button btn_log_out;
     private FirebaseAuth auth;
 
     @Override
@@ -31,10 +31,11 @@ public class MainActivity extends AppCompatActivity implements PodcastsFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        btnLogout = (MenuItem) findViewById(R.id.log_out_bttn);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        btn_log_out = (Button) findViewById(R.id.btn_log_out);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -47,7 +48,13 @@ public class MainActivity extends AppCompatActivity implements PodcastsFragment.
 
         auth = FirebaseAuth.getInstance();
 
-
+        btn_log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
     }
 
     @Override
@@ -70,18 +77,5 @@ public class MainActivity extends AppCompatActivity implements PodcastsFragment.
     public void onButtonSelected() {
         Intent in = new Intent(MainActivity.this, RssActivity.class);
         MainActivity.this.startActivity(in);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.log_out_bttn:
-                auth.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                return true;
-            default:
-                return true;
-
-        }
     }
 }
