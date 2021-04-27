@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements PodcastsFragment.
         Intent in = new Intent(MainActivity.this, RssActivity.class);
         MainActivity.this.startActivity(in);
     }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.log_out_bttn:
