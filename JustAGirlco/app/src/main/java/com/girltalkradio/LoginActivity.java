@@ -151,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     private void googleSignIn() {
+        mGoogleSignInClient.signOut();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
