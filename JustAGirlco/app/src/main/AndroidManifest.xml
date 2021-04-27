@@ -8,6 +8,7 @@
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -33,7 +34,7 @@
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
-            android:theme="@style/Theme.JustAGirlCo.NoActionBar"></activity>
+            android:theme="@style/Theme.JustAGirlCo.NoActionBar"/>
         <activity android:name=".RssActivity" />
         <activity android:name=".ListeningScreenActivity" />
         <activity

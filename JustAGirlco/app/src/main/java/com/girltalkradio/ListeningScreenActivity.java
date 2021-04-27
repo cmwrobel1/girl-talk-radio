@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.nfc.Tag;
@@ -65,6 +66,9 @@ public class ListeningScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listening);
 
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        // player.seeker();
 
 //        String currentTime = b.getString("CurrentTime");
 //        currTextView.setText(currentTime);
@@ -80,6 +84,10 @@ public class ListeningScreenActivity extends AppCompatActivity {
         //seekBar.setMax(player.getTotalDuration());
 
         //int durationTime = player.getTotalDuration();
+
+        ImageButton seekBackButton = (ImageButton) findViewById(R.id.seekBack);
+        ImageButton seekForwardButton = (ImageButton) findViewById(R.id.seekForward);
+
 
         ImageButton playButton = (ImageButton) findViewById(R.id.playButton);
         ImageButton pauseButton = (ImageButton) findViewById(R.id.pauseButton);
@@ -109,33 +117,33 @@ public class ListeningScreenActivity extends AppCompatActivity {
         playButton.setVisibility(View.INVISIBLE);
 
 
-        seekBar.animate();
+
 
 
         playAudio(s);
+
+
 
         seekBar.setProgress(getPos());
         String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
         currTextView.setText(stringTest);
 
- //       new ListeningScreenActivity.ProcessInBackground().execute();
-//        player.seeker();
-//        String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
-//        currTextView.setText(stringTest);
 
 
-        //currTextView.setText(player.getPosition());
 
-//            for(int x=0; x<100;x++) {
-//                seekBar.setProgress(getPos());
-//                String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
-//                currTextView.setText(stringTest);
-//            }
+        seekBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                player.seekBack15Seconds();
+            }
+        });
 
-       // int curPos = player.getPosition();
-
-//       tStart();
-        //handler.postDelayed(r, 1000);
+        seekForwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                player.seekForward15Seconds();
+            }
+        });
 
         pauseButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -176,81 +184,14 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-               // player.seekTo(seekBar.getProgress());
+
             }
         });
 
 
     }
 
-//    public class ProcessInBackground extends AsyncTask<Integer, Void, Exception>{
-//        ProgressDialog progressDialog = new ProgressDialog(ListeningScreenActivity.this);
-//        Exception exception = null;
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            progressDialog.setMessage("Test");        //message for long loading screen
-//            progressDialog.show();
-//        }
-//
-//        @Override
-//        protected Exception doInBackground(Integer... integers) {
-//            try{
-//                player.seeker();
-//                String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
-//                currTextView.setText(stringTest);
-//            }catch(Exception e){
-//                exception = e;
-//            }
-//            return exception;
-//        }
-//        @Override
-//        protected void onPostExecute(Exception s) {
-//            super.onPostExecute(s);
-//            progressDialog.dismiss();
-//        }
-//    }
 
-
-
-//    public void tStart(){
-//        isRunning = true;
-//        myThread thread = new myThread();
-//        thread.start();
-//    }
-//    public void tStop(){
-//        isRunning = false;
-//    }
-
-//    class myThread extends Thread{
-//        @Override
-//        public void run(){
-//            while(isRunning){
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                            try {
-//                                Thread.sleep(1000);
-//                            }catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-//                            seekBar.setProgress(getPos());
-//                            String s = DateUtils.formatElapsedTime(getPos() / 1000);
-//                            currTextView.setText(s);
-//                        }
-//
-//                });
-//                try {
-//                    Thread.sleep(1000);
-//                }catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//    }
 
 
     @Override
@@ -259,11 +200,50 @@ public class ListeningScreenActivity extends AppCompatActivity {
         // Bind to LocalService
         Intent intent = new Intent(this, MediaPlayerService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
-    }
 
+        // Seek bar
+        Handler podcastMethodsHandler = new Handler();
+        Runnable musicRun = new Runnable() {
+
+            @Override
+            public void run() {
+                if (serviceBound == true) { // Check if service bounded
+
+                    int musicCurTime = player.getPosition();
+
+                    seekBar.setProgress(musicCurTime / 1000);
+                    String stringTest = DateUtils.formatElapsedTime(musicCurTime / 1000);
+                    currTextView.setText(stringTest);
+
+                    podcastMethodsHandler.postDelayed(this, 1000);
+                }
+            }
+        };
+        podcastMethodsHandler.postDelayed(musicRun,1000);
+
+
+//        //Volume
+//        Handler podcastVolumeHandler = new Handler();
+//        Runnable volumeRun = new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                if (serviceBound == true) { // Check if service bounded
+//
+//                    AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+//                    // For example to set the volume of played media to maximum.
+//                    audioManager.setStreamVolume (AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),0);
+//
+//                    podcastVolumeHandler.postDelayed(this, 1000);
+//                }
+//            }
+//        };
+//        podcastVolumeHandler.postDelayed(musicRun,1000);
+    }
     @Override
     protected void onStop() {
         super.onStop();
+        player.stopMedia();
         unbindService(serviceConnection);
         serviceBound = false;
     }
@@ -311,6 +291,12 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         }
     }
+
+    //testing binding stuff
+
+
+
+
 
     //Binding this Client to the AudioPlayer Service
     //Services need to be "bound" to something so that they will begin execution

@@ -1,5 +1,7 @@
 package com.girltalkradio.ui.podcasts;
 
+import com.girltalkradio.RssActivity;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,4 +18,6 @@ public class PodcastsViewModel extends ViewModel {
     public LiveData<String> getText() {
         return mText;
     }
+
+
 }
