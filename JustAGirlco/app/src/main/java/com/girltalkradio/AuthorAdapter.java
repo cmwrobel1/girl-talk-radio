@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.ViewHolder> {
 
     List<String> titles;
     List<String>imageStrings;
@@ -27,7 +27,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     //pagination variables
     private boolean isLoadingAdded = false;
 
-    public Adapter(Context ctx, List<String> titles,List<String> imagesStr,onPodcastListener onPodcastListener){
+    public AuthorAdapter(Context ctx, List<String> titles, List<String> imagesStr, onPodcastListener onPodcastListener){
         this.titles = titles;
         this.imageStrings = imagesStr;
         this.context = ctx;

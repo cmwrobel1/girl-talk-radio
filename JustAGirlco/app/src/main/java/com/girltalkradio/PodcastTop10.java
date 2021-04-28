@@ -1,17 +1,17 @@
 package com.girltalkradio;
 
-public class Podcast {
+public class PodcastTop10 {
 
     private String rss;
     private String title;
     private Long order;
     private String image;
 
-    public Podcast(){
+    public PodcastTop10(){
 
     }
 
-    public Podcast(String url, String title, Long order,String image){
+    public PodcastTop10(String url, String title, Long order, String image){
         this.rss = url;
         this.title = title;
         this.order = order;
