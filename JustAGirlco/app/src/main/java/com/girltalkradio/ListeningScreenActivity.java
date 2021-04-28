@@ -100,13 +100,13 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         //Displaying the max duration of the audio file
 //        Uri uriTest = Uri.parse(s);
-//        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-//        mmr.setDataSource(s);
-//        String dStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-//        int mili = Integer.parseInt(dStr);
-//        dStr = DateUtils.formatElapsedTime(mili / 1000);
-//        durrTextView.setText(dStr);
-//        seekBar.setMax(mili / 1000);
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        mmr.setDataSource(s);
+        String dStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        int mili = Integer.parseInt(dStr);
+        dStr = DateUtils.formatElapsedTime(mili / 1000);
+        durrTextView.setText(dStr);
+        seekBar.setMax(mili / 1000);
 
 
         //Display the picture for the audio file
