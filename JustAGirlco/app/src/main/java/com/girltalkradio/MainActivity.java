@@ -1,12 +1,16 @@
 package com.girltalkradio;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.girltalkradio.ui.podcasts.PodcastsFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity {
     //passes the button - might need more efficient way to do this
     private AppBarConfiguration mAppBarConfiguration;
+    private Button btn_log_out;
+    private FirebaseAuth auth;
     DrawerLayout drawer;
 
     @Override
@@ -37,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        btn_log_out = (Button) findViewById(R.id.btn_log_out);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -46,6 +54,16 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        auth = FirebaseAuth.getInstance();
+
+        btn_log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                auth.signOut();
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            }
+        });
     }
 
     @Override
@@ -61,6 +79,4 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
 }

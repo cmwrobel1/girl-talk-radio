@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.nfc.Tag;
@@ -65,7 +66,9 @@ public class ListeningScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listening);
 
-       // player.seeker();
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        // player.seeker();
 
 //        String currentTime = b.getString("CurrentTime");
 //        currTextView.setText(currentTime);
@@ -81,6 +84,10 @@ public class ListeningScreenActivity extends AppCompatActivity {
         //seekBar.setMax(player.getTotalDuration());
 
         //int durationTime = player.getTotalDuration();
+
+        ImageButton seekBackButton = (ImageButton) findViewById(R.id.seekBack);
+        ImageButton seekForwardButton = (ImageButton) findViewById(R.id.seekForward);
+
 
         ImageButton playButton = (ImageButton) findViewById(R.id.playButton);
         ImageButton pauseButton = (ImageButton) findViewById(R.id.pauseButton);
@@ -124,7 +131,19 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
 
 
+        seekBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                player.seekBack15Seconds();
+            }
+        });
 
+        seekForwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                player.seekForward15Seconds();
+            }
+        });
 
         pauseButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -182,7 +201,7 @@ public class ListeningScreenActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MediaPlayerService.class);
         bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 
-
+        // Seek bar
         Handler podcastMethodsHandler = new Handler();
         Runnable musicRun = new Runnable() {
 
@@ -201,6 +220,25 @@ public class ListeningScreenActivity extends AppCompatActivity {
             }
         };
         podcastMethodsHandler.postDelayed(musicRun,1000);
+
+
+//        //Volume
+//        Handler podcastVolumeHandler = new Handler();
+//        Runnable volumeRun = new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                if (serviceBound == true) { // Check if service bounded
+//
+//                    AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+//                    // For example to set the volume of played media to maximum.
+//                    audioManager.setStreamVolume (AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),0);
+//
+//                    podcastVolumeHandler.postDelayed(this, 1000);
+//                }
+//            }
+//        };
+//        podcastVolumeHandler.postDelayed(musicRun,1000);
     }
     @Override
     protected void onStop() {
@@ -253,12 +291,12 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         }
     }
-    
+
     //testing binding stuff
 
-    
-    
-    
+
+
+
 
     //Binding this Client to the AudioPlayer Service
     //Services need to be "bound" to something so that they will begin execution
