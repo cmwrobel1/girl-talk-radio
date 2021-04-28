@@ -24,6 +24,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     Context context;
     private onPodcastListener onPodcastListener;
 
+    //pagination variables
+    private boolean isLoadingAdded = false;
+
     public Adapter(Context ctx, List<String> titles,List<String> imagesStr,onPodcastListener onPodcastListener){
         this.titles = titles;
         this.imageStrings = imagesStr;
