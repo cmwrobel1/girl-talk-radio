@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.girltalkradio"
+        applicationId "com.girltalkradio.one"
         minSdkVersion 16
         targetSdkVersion 30
         multiDexEnabled true
