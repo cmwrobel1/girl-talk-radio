@@ -177,7 +177,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
                             signinstatus = true;
-                            FirebaseUser user = auth.getCurrentUser();
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }

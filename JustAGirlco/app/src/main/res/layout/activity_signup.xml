@@ -24,6 +24,17 @@
             android:src="@drawable/tanbolt"/>
 
         <EditText
+            android:id="@+id/display_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:hint="@string/display_name"
+            android:imeOptions="actionUnspecified"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/black" />
+
+        <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,7 +56,6 @@
             android:maxLines="1"
             android:singleLine="true"
             android:textColor="@color/black" />
-
 
         <Button
             android:id="@+id/sign_up_button"
