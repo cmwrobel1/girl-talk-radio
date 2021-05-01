@@ -99,7 +99,7 @@ public class ListeningScreenActivity extends AppCompatActivity {
         TextView durrTextView = (TextView) findViewById(R.id.TVmax);
 
         //Displaying the max duration of the audio file
-        Uri uriTest = Uri.parse(s);
+//        Uri uriTest = Uri.parse(s);
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         mmr.setDataSource(s);
         String dStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
