@@ -167,11 +167,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Google Sign in Failed", Toast.LENGTH_SHORT).show();
             Log.w(TAG, "Google sign in failed", e);
         }
-        if (signinstatus == true){
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
     }
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -185,6 +180,11 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = auth.getCurrentUser();
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        }
+                        if (signinstatus == true) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     }
                 });
