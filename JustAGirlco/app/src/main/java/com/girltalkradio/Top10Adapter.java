@@ -14,13 +14,13 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
-public class Top10Adapter extends FirebaseRecyclerAdapter<PodcastTop10,Top10Adapter.myviewholder> {
+public class Top10Adapter extends FirebaseRecyclerAdapter<Podcast,Top10Adapter.myviewholder> {
 
         LayoutInflater inflater;
         private onPodcastListener onPodcastListener;
 
         //constructor
-        public Top10Adapter(@NonNull FirebaseRecyclerOptions<PodcastTop10> options, onPodcastListener onPodcastListener, Context ctx){
+        public Top10Adapter(@NonNull FirebaseRecyclerOptions<Podcast> options, onPodcastListener onPodcastListener, Context ctx){
             super(options);
             //inherits titles and url from the Podcast class
             this.onPodcastListener = onPodcastListener;
@@ -28,7 +28,7 @@ public class Top10Adapter extends FirebaseRecyclerAdapter<PodcastTop10,Top10Adap
         }
 
         @Override
-        protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull PodcastTop10 model) {
+        protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull Podcast model) {
             holder.name.setText(model.getTitle());      //model is the podcast object
             // holder.url.setText(model.getRss());
             holder.order.setText(String.valueOf(model.getOrder()));
