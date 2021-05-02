@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
+    public boolean signinstatus = false;
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
     private GoogleSignInAccount googleAccount;
@@ -163,11 +164,9 @@ public class LoginActivity extends AppCompatActivity {
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Toast.makeText(LoginActivity.this, "Google Sign in Failed", Toast.LENGTH_SHORT).show();
             Log.w(TAG, "Google sign in failed", e);
         }
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -177,9 +176,14 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = auth.getCurrentUser();
+                            signinstatus = true;
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        }
+                        if (signinstatus == true) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     }
                 });
