@@ -1,14 +1,18 @@
 package com.girltalkradio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -31,9 +35,12 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,6 +58,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RssActivity extends AppCompatActivity {
 
@@ -59,6 +67,8 @@ public class RssActivity extends AppCompatActivity {
     ArrayList<String> links;
     ArrayList<String> pictures;
     String podcastFromRecycler;
+    RecyclerView podcastList;
+    RecyclerView.Adapter<PodsListViewHolder> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +77,8 @@ public class RssActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        lvRss = (ListView) findViewById(R.id.LvRss);
+        //lvRss = (ListView) findViewById(R.id.LvRss);
+        podcastList = findViewById(R.id.recview);
         titles = new ArrayList<String>();
         links = new ArrayList<String>();
         pictures = new ArrayList<String>();
@@ -94,6 +105,50 @@ public class RssActivity extends AppCompatActivity {
             }
         });
         new ProcessInBackground().execute();
+
+        adapter = new RecyclerView.Adapter<PodsListViewHolder>(){
+        List<String> titles;
+        List<String> imageStrings;
+        List<String>mp3;
+        LayoutInflater inflater;
+        Context context;
+
+            @NonNull
+            @Override
+            public PodsListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = inflater.inflate(R.layout.custom_grid_layout,parent,false);
+                return new PodsListViewHolder(view);
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull PodsListViewHolder holder, int position) {
+                holder.title.setText(titles.get(position));
+                //convert the images to urls and use picasso?
+                Uri authorImage = Uri.parse(imageStrings.get(position));       //convert the string to uri
+                Picasso.get().load(authorImage).into(holder.image);
+                //  holder.gridIcon.setImageResource(images.get(position));
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle b1 = new Bundle();
+                        b1.putString("url",mp3.get(position));
+                        Intent in = new Intent(RssActivity.this, ListeningScreenActivity.class);
+                        in.putExtras(b1);
+                        RssActivity.this.startActivity(in);
+                    }
+                });
+
+            }
+            @Override
+            public int getItemCount() {
+                return titles.size();
+            }
+        };
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,1,GridLayoutManager.VERTICAL,false);
+        podcastList.setLayoutManager(gridLayoutManager);
+        podcastList.setAdapter(adapter);
+
     }
 
 
