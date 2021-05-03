@@ -72,9 +72,7 @@ public class RssActivity extends AppCompatActivity {
         links = new ArrayList<String>();
         pictures = new ArrayList<String>();
 
-        titles.add("Jack's MP3 Test");
-        links.add("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3");
-        pictures.add("https://i1.sndcdn.com/artworks-zjw8CwzCVpT3nLGO-tEVPtQ-t500x500.jpg");
+
 
         Bundle b = intent.getExtras();
         podcastFromRecycler = b.getString("url");

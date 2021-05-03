@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 /**
  * This Activity will serve as the calling instance for the MediaPlayerService
@@ -44,7 +45,7 @@ import java.net.URL;
  *
  * Then the service will run this url.
  *
- * Might need to change this later to implement a Recycler View
+ *
  */
 
 
@@ -65,43 +66,25 @@ public class ListeningScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listening);
-
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
-        // player.seeker();
-
-//        String currentTime = b.getString("CurrentTime");
-//        currTextView.setText(currentTime);
-
-        //int time = player.showTime();
-
         Intent in = getIntent();
         Bundle b = in.getExtras();
         String s = b.getString("url");
         String pic = b.getString("pic");
 
-
-        //seekBar.setMax(player.getTotalDuration());
-
-        //int durationTime = player.getTotalDuration();
-
+        //Set up Buttons
         ImageButton seekBackButton = (ImageButton) findViewById(R.id.seekBack);
         ImageButton seekForwardButton = (ImageButton) findViewById(R.id.seekForward);
-
-
         ImageButton playButton = (ImageButton) findViewById(R.id.playButton);
         ImageButton pauseButton = (ImageButton) findViewById(R.id.pauseButton);
-
         seekBar = (SeekBar) findViewById(R.id.seekBar);
-
-
         currTextView = (TextView) findViewById(R.id.TVcurr);
         TextView durrTextView = (TextView) findViewById(R.id.TVmax);
 
-        //Displaying the max duration of the audio file
-//        Uri uriTest = Uri.parse(s);
+
+        //Retrieve MetaData
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-        mmr.setDataSource(s);
+        mmr.setDataSource(s, new HashMap<String, String>());
         String dStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         int mili = Integer.parseInt(dStr);
         dStr = DateUtils.formatElapsedTime(mili / 1000);
@@ -115,58 +98,47 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         //Start play button hidden
         playButton.setVisibility(View.INVISIBLE);
-
-
-
-
-
         playAudio(s);
 
 
-
+        //Start seek bar
         seekBar.setProgress(getPos());
         String stringTest = DateUtils.formatElapsedTime(getPos() / 1000);
         currTextView.setText(stringTest);
 
 
 
-
+        //Listeners
         seekBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 player.seekBack15Seconds();
             }
         });
-
         seekForwardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 player.seekForward15Seconds();
             }
         });
-
         pauseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(ListeningScreenActivity.this, "Pause", Toast.LENGTH_SHORT).show();
                 player.pauseMedia();
                 pauseButton.setVisibility(View.INVISIBLE);
                 playButton.setVisibility(View.VISIBLE);
 
             }
         });
-
         playButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(ListeningScreenActivity.this, "Play", Toast.LENGTH_SHORT).show();
                 player.resumeMedia();
                 pauseButton.setVisibility(View.VISIBLE);
                 playButton.setVisibility(View.INVISIBLE);
 
             }
         });
-
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean user) {
@@ -174,26 +146,15 @@ public class ListeningScreenActivity extends AppCompatActivity {
                 if(user) {
                     player.seekTo(i * 1000);
                 }
-
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
             }
         });
-
-
     }
-
-
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -222,23 +183,6 @@ public class ListeningScreenActivity extends AppCompatActivity {
         podcastMethodsHandler.postDelayed(musicRun,1000);
 
 
-//        //Volume
-//        Handler podcastVolumeHandler = new Handler();
-//        Runnable volumeRun = new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                if (serviceBound == true) { // Check if service bounded
-//
-//                    AudioManager audioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-//                    // For example to set the volume of played media to maximum.
-//                    audioManager.setStreamVolume (AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),0);
-//
-//                    podcastVolumeHandler.postDelayed(this, 1000);
-//                }
-//            }
-//        };
-//        podcastVolumeHandler.postDelayed(musicRun,1000);
     }
     @Override
     protected void onStop() {
@@ -247,11 +191,6 @@ public class ListeningScreenActivity extends AppCompatActivity {
         unbindService(serviceConnection);
         serviceBound = false;
     }
-
-
-
-
-
 
     public int getPos(){
         Intent in = getIntent();
@@ -276,8 +215,6 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         }
     }
-
-
     private void playAudio(String media) {
         //Check is service is active
         if (!serviceBound) {
@@ -291,11 +228,6 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         }
     }
-
-    //testing binding stuff
-
-
-
 
 
     //Binding this Client to the AudioPlayer Service
