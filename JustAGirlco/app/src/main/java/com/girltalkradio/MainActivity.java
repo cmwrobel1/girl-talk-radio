@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.girltalkradio.databinding.NavHeaderMainBinding;
 import com.girltalkradio.ui.podcasts.PodcastsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -60,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         auth = FirebaseAuth.getInstance();
+
+        View viewHeader = navigationView.getHeaderView(0);
+        NavHeaderMainBinding navViewHeaderBinding = NavHeaderMainBinding.bind(viewHeader);
+        navViewHeaderBinding.setName(auth.getCurrentUser().getDisplayName());
+        navViewHeaderBinding.setEmail(auth.getCurrentUser().getEmail());
 
         btn_log_out.setOnClickListener(new View.OnClickListener() {
             @Override
