@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -17,14 +18,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword;
+    private EditText inputEmail, inputPassword, inputDisplayName;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-
+    private final String TAG = "SignupActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,7 @@ public class SignupActivity extends AppCompatActivity {
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
+        inputDisplayName = (EditText) findViewById(R.id.display_name);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -60,6 +63,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                String display_name = inputDisplayName.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -70,32 +74,15 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                if (TextUtils.isEmpty(display_name)) {
+                    Toast.makeText(getApplicationContext(), "Enter display name!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (password.length() < 6) {
                     Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                progressBar.setVisibility(View.VISIBLE);
-                //create user
-                auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                                    finish();
-                                }
-                            }
-                        });
+                registerUser(email, password, display_name);
 
             }
         });
@@ -105,5 +92,42 @@ public class SignupActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.GONE);
+    }
+    // Can add PhotoURL and other fields as they become usable
+    private void registerUser(String email, String password,String displayname) {
+        progressBar.setVisibility(View.VISIBLE);
+
+        //create user
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Toast.makeText(SignupActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        auth.signInWithEmailAndPassword(email,password);
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
+                                    Toast.LENGTH_SHORT).show();
+                        } else { // Sets user display name and
+                             UserProfileChangeRequest change = new UserProfileChangeRequest.Builder()
+                                     .setDisplayName(displayname)
+                                     .build();
+                            FirebaseAuth.getInstance().getCurrentUser().updateProfile(change).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "User display name updated."+ displayname);
+                                    }else Log.d(TAG, "User display name failed."+ displayname);
+                                }
+                            });
+                             Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                             startActivity(intent);
+                             finish();
+                        }
+                    }
+                });
     }
 }

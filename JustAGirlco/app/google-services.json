@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "620011744050-jibeib2jsl0dkio38cp4ub9bcmdi213f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.girltalkradio",
+            "certificate_hash": "7dd977de87a0a8ff2d76ac1273787d706cd0b72f"
+          }
+        },
+        {
           "client_id": "620011744050-t68qbasdee3jf4c58vvkop732107ouv6.apps.googleusercontent.com",
           "client_type": 3
         }

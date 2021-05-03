@@ -7,10 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.girltalkradio.ui.podcasts.PodcastsFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private Button btn_log_out;
     private FirebaseAuth auth;
+    private TextView DisplayName, DisplayEmail;
     DrawerLayout drawer;
 
     @Override
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         btn_log_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Goodbye "+ auth.getCurrentUser().getDisplayName(), Toast.LENGTH_LONG).show();
                 auth.signOut();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }

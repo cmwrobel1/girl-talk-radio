@@ -54,5 +54,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="prompt_password">Enter Password</string>
     <string name="log_out">Log Out</string>
+    <string name="display_name">Display Name</string>
 
 </resources>
