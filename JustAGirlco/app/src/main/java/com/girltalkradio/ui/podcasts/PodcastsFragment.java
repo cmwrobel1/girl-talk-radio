@@ -1,7 +1,6 @@
 package com.girltalkradio.ui.podcasts;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,24 +22,15 @@ import com.girltalkradio.Podcast;
 import com.girltalkradio.PodcastViewHolder;
 import com.girltalkradio.R;
 import com.girltalkradio.RssActivity;
-import com.girltalkradio.Top10Adapter;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 public class PodcastsFragment extends Fragment{
 
-    //private AuthorAdapter.onPodcastListener podcastListener;
     private PodcastsViewModel podcastsViewModel;
     RecyclerView podcastList;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    //AuthorAdapter adapter;
     FirebaseRecyclerPagingAdapter<Podcast, PodcastViewHolder> adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -75,27 +65,6 @@ public class PodcastsFragment extends Fragment{
                 .setQuery(myRef, config, Podcast.class)
                 .build();
 
-
-//        DatabaseReference myRef = database.getReferenceFromUrl("https://justagirlco-b4de1-default-rtdb.firebaseio.com/1StAH6C83cDbx5l8WidtkteVUpwXHi2DBcpJtd4WGpCY/podcasts");
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                ArrayList<Podcast> pods = (ArrayList<Podcast>) snapshot.getValue();
-//
-//                System.out.println(pods);
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-
-       // podcastListener = this; //i think this grabs the MainActivity that this fragment is connected to
-       // adapter = new AuthorAdapter(options,podcastListener,getActivity());
-
         adapter = new FirebaseRecyclerPagingAdapter<Podcast, PodcastViewHolder>(options) {
 
             @NonNull
@@ -108,6 +77,16 @@ public class PodcastsFragment extends Fragment{
             @Override
             protected void onBindViewHolder(@NonNull PodcastViewHolder holder, int position, @NonNull Podcast model) {
                 holder.setItem(model);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle b1 = new Bundle();
+                        b1.putString("url",model.getRss());
+                        Intent in = new Intent(getActivity(), RssActivity.class);
+                        in.putExtras(b1);
+                        getActivity().startActivity(in);
+                    }
+                });
             }
 
             @Override
@@ -148,10 +127,6 @@ public class PodcastsFragment extends Fragment{
 
         };
 
-
-
-
-
         //set Adapter to the recyclerview
         podcastList.setAdapter(adapter);
 
@@ -178,15 +153,4 @@ public class PodcastsFragment extends Fragment{
         super.onStop();
         adapter.stopListening();
     }
-
-//    @Override
-//    public void onPodcastListner(int position) {
-////        String podUrl = hardcodedScumPodcasts[position];
-////        Bundle b1 = new Bundle();
-////        b1.putString("url",podUrl);
-////        Intent in = new Intent(getActivity(), RssActivity.class);
-////        in.putExtras(b1);
-////        getActivity().startActivity(in);
-//    }
-
 }
