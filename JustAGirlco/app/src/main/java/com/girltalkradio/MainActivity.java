@@ -36,7 +36,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity {
     //passes the button - might need more efficient way to do this
     private AppBarConfiguration mAppBarConfiguration;
-    private Button btn_log_out;
     private FirebaseAuth auth;
     private TextView DisplayName, DisplayEmail;
     DrawerLayout drawer;
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        btn_log_out = (Button) findViewById(R.id.btn_log_out);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -67,15 +65,6 @@ public class MainActivity extends AppCompatActivity {
         NavHeaderMainBinding navViewHeaderBinding = NavHeaderMainBinding.bind(viewHeader);
         navViewHeaderBinding.setName(auth.getCurrentUser().getDisplayName());
         navViewHeaderBinding.setEmail(auth.getCurrentUser().getEmail());
-
-        btn_log_out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Goodbye "+ auth.getCurrentUser().getDisplayName(), Toast.LENGTH_LONG).show();
-                auth.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
     }
 
     @Override
@@ -90,5 +79,19 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_log_out:
+                auth.signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK );
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
