@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 /**
  * This Activity will serve as the calling instance for the MediaPlayerService
@@ -83,7 +84,7 @@ public class ListeningScreenActivity extends AppCompatActivity {
 
         //Retrieve MetaData
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
-        mmr.setDataSource(s);
+        mmr.setDataSource(s, new HashMap<String, String>());
         String dStr = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         int mili = Integer.parseInt(dStr);
         dStr = DateUtils.formatElapsedTime(mili / 1000);
