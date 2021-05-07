@@ -18,7 +18,7 @@ This application is written in Java and uses Firebase as a backend solution. The
 
 
 ## Technologies 
-* Android Studio is reccommended to use as the developer environment
+* Android Studio is recommended to use as the developer environment
 * Firebase Realtime database is populated using a Google Sheet 
 * Firebase Authentication is used to keep track of users.
 * The [Firebase-UI](https://github.com/firebase/FirebaseUI-Android/tree/4455f411e3605743bb4511d1a75cda7f398bc399/database) API is used to populate the grid views in both the Podcasts page and the Top 10 Page
